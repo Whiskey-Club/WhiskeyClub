@@ -1,0 +1,16 @@
+@page "/monthlyChoices"
+
+<PageTitle>Monthly Choices</PageTitle>
+
+<h1>Monthly Selections</h1>
+
+<button class="btn btn-primary" @onclick="NewSelectionClicked">New Selection</button>
+
+@code {
+    private int currentCount = 0;
+
+    private void NewSelectionClicked()
+    {
+        currentCount++;
+    }
+}

@@ -1,0 +1,16 @@
+@page "/reviews"
+
+<PageTitle>Whiskey Reviews</PageTitle>
+
+<h1>Whiskey Reviews</h1>
+
+<button class="btn btn-primary" @onclick="NewReviewClicked">New Review</button>
+
+@code {
+    private int currentCount = 0;
+
+    private void NewReviewClicked()
+    {
+        currentCount++;
+    }
+}
