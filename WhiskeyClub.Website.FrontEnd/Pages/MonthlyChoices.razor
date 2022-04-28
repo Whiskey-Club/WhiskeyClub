@@ -18,25 +18,24 @@
             Search by spirit name: <input type="text" id="spiritName"/>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-auto">
-             <li class="list-group-item">Month</li>
-            <li class="list-group-item">December</li>
-        </div>
-        <div class="col-md-auto">
-            <li class="list-group-item">Year</li>
-            <li class="list-group-item">2021</li>
-        </div>
-        <div class="col-md-auto">
-            <li class="list-group-item">Spirit</li>
-            <li class="list-group-item">Ardbeg</li>
-        </div>
-    </div>
+    @* So we want to tie this up to a function that gets the number of monthly selections and passes in specific
+    selection data to the MonthlyChoice component which will render in the for loop...*@
+    @for (int i = 0; i < 5; i++)
+        {
+            <div class="row">
+                <button class="btn btn-primary" @onclick="GoToReview"><MonthlyChoice SpiritName="Ardbeg"/></button>
+            </div>
+        }
 </div>
 
 
-
 @code {
+
+    private void GoToReview()
+    {
+        throw new NotImplementedException();
+    }
+
     private void CreateNewMonthlySelection()
     {
         throw new NotImplementedException();
