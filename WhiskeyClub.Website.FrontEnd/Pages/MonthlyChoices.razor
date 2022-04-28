@@ -1,3 +1,4 @@
+@using WhiskeyClub.Website.Domain
 @page "/monthlyChoices"
 
 <PageTitle>Monthly Choices</PageTitle>
@@ -23,13 +24,20 @@
     @for (int i = 0; i < 5; i++)
         {
             <div class="row">
-                <button class="btn btn-primary" @onclick="GoToReview"><MonthlyChoice SpiritName="Ardbeg"/></button>
+                <button class="btn btn-primary" @onclick="GoToReview"><MonthlyChoice Spirit=@CreateSpirit("Ardbeg") /></button>
             </div>
         }
 </div>
 
 
 @code {
+
+    private Spirit CreateSpirit(string name)
+    {
+        Spirit s = new Spirit();
+        s.Name = name;
+        return s;
+    }
 
     private void GoToReview()
     {

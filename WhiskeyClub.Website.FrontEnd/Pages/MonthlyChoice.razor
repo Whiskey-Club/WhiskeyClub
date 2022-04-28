@@ -1,11 +1,14 @@
+@using WhiskeyClub.Website.Domain
+
 @page "/monthlyChoice"
 
 <PageTitle>MonthlyChoice</PageTitle>
-<p>@SpiritName</p>
+
+<p>@Spirit.Name</p>
 
 
 @code 
 {
     [Parameter]
-    public string SpiritName { get; set; }
+    public Spirit Spirit { get; set; }
 }
