@@ -4,13 +4,41 @@
 
 <h1>Monthly Selections</h1>
 
-<button class="btn btn-primary" @onclick="NewSelectionClicked">New Selection</button>
+<div class="container">
+    <div class="row">
+        <div class="col-md-auto">
+            <button class="btn btn-primary" @onclick="CreateNewMonthlySelection">New Selection</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-auto">
+            Search by date: <input type="text" id="date"/>
+        </div>
+        <div class="col-md-auto">
+            Search by spirit name: <input type="text" id="spiritName"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-auto">
+             <li class="list-group-item">Month</li>
+            <li class="list-group-item">December</li>
+        </div>
+        <div class="col-md-auto">
+            <li class="list-group-item">Year</li>
+            <li class="list-group-item">2021</li>
+        </div>
+        <div class="col-md-auto">
+            <li class="list-group-item">Spirit</li>
+            <li class="list-group-item">Ardbeg</li>
+        </div>
+    </div>
+</div>
+
+
 
 @code {
-    private int currentCount = 0;
-
-    private void NewSelectionClicked()
+    private void CreateNewMonthlySelection()
     {
-        currentCount++;
+        throw new NotImplementedException();
     }
 }
