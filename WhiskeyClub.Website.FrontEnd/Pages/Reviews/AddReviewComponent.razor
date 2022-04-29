@@ -5,6 +5,7 @@
 @using Models.Authors
 
 @inject NavigationManager navigationManager
+@inject IReviewRepository reviewRepository
 
 <div class="container">
     <div class="row">
@@ -80,8 +81,7 @@
         var review = author.CreateReview(spirit, this.review.Rating, this.review.Notes);
         
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-        var repository = new ReviewRepository();
-        var result = await repository.AddReviewAsync(review, cts.Token);
+        var result = await this.reviewRepository.AddReviewAsync(review, cts.Token);
         if (result)
         {
             this.navigationManager.NavigateTo("reviews");

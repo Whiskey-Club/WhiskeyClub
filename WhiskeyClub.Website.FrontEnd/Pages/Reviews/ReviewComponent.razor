@@ -1,5 +1,6 @@
 @page "/reviews/{reviewId}"
 @using Models.Reviews
+@inject IReviewRepository reviewRepository
 
 <PageTitle>Whiskey Review</PageTitle>
 
@@ -59,8 +60,7 @@
         try
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            var repository = new ReviewRepository();
-            this.review = await repository.GetReviewAsync(this.ReviewId, cts.Token);
+            this.review = await this.reviewRepository.GetReviewAsync(this.ReviewId, cts.Token);
         }
         finally
         {

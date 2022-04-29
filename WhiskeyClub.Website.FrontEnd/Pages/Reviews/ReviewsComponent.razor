@@ -1,6 +1,7 @@
 @page "/reviews"
 @using Models.Reviews;
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
+@inject IReviewRepository reviewRepository
 
 <PageTitle>Whiskey Reviews</PageTitle>
 
@@ -61,8 +62,7 @@
         try
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            var repository = new ReviewRepository();
-            this.reviews = await repository.GetAllReviewsAsync(cts.Token);
+            this.reviews = await this.reviewRepository.GetAllReviewsAsync(cts.Token);
         }
         finally
         {
@@ -72,6 +72,6 @@
 
     private void AddReviewClicked()
     {
-        this.NavigationManager.NavigateTo("add/review");
+        this.navigationManager.NavigateTo("add/review");
     }
 }
