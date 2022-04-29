@@ -1,7 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace WhiskeyClub.Website.FrontEnd.Reviews;
+namespace WhiskeyClub.Website.FrontEnd.Models.Reviews;
 
 public class ReviewRepository
 {

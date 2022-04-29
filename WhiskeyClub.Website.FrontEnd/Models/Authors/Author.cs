@@ -1,8 +1,8 @@
 
+using WhiskeyClub.Website.FrontEnd.Models.Reviews;
 using WhiskeyClub.Website.FrontEnd.Models.Spirits;
-using WhiskeyClub.Website.FrontEnd.Reviews;
 
-namespace WhiskeyClub.Website.FrontEnd;
+namespace WhiskeyClub.Website.FrontEnd.Models.Authors;
 
 public class Author
 {

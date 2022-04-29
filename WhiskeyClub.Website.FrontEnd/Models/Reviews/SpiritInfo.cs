@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace WhiskeyClub.Website.FrontEnd.Reviews;
+namespace WhiskeyClub.Website.FrontEnd.Models.Reviews;
 
 /// <summary>
 /// Defines a value object that contains spirit info for use in the <see cref="Review" /> aggregate.

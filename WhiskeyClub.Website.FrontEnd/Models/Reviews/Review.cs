@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace WhiskeyClub.Website.FrontEnd.Reviews;
+namespace WhiskeyClub.Website.FrontEnd.Models.Reviews;
 
 /// <summary>
 /// Defines a review aggregate.

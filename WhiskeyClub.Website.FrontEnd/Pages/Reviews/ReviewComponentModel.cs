@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace WhiskeyClub.Website.FrontEnd;
+namespace WhiskeyClub.Website.FrontEnd.Pages.Reviews;
 
 /// <summary>
 /// Defines a model for the review component.
