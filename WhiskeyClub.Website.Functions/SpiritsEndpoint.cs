@@ -75,6 +75,7 @@ namespace WhiskeyClub.Website.Functions
                 databaseName: "WhiskeyClub",
                 collectionName: "Spirits",
                 ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING",
+                PartitionKey = "{id}",
                 Id = "{id}")] Spirit spirit,
             ILogger log)
         {
