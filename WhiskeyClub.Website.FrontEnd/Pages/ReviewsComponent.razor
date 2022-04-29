@@ -3,8 +3,17 @@
 
 <PageTitle>Whiskey Reviews</PageTitle>
 
+<AddReviewModalComponent @ref="this.addReview" />
+
 <div class="container">
-    <div class="row">
+    <div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <button type="button" class="btn btn-primary" @onclick="() => this.addReview.Open()">
+                <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Review
+            </button>
+        </div>
+    </div>
+    <div class="d-flex flex-row">
         @if (this.isLoading)
         {
             <h2>Loading reviews...</h2>
@@ -45,8 +54,9 @@
     bool isLoading;
     private int currentCount = 0;
     private IEnumerable<Review> reviews = null;
+    private AddReviewModalComponent addReview;
 
-    private void NewReviewClicked()
+    private void AddReviewClicked()
     {
         currentCount++;
     }

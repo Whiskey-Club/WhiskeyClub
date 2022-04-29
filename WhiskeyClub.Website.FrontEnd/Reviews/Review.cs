@@ -12,8 +12,7 @@ public class Review
     /// Initializes a new instance of the <see cref="Review" /> class.
     /// </summary>
     /// <param name="id">The review identifier.</param>
-    /// <param name="spirit">The spirit information.</param>
-    public Review(string id, SpiritInfo spirit)
+    public Review(string id)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
@@ -21,7 +20,6 @@ public class Review
         }
 
         this.Id = id;
-        this.Spirit = spirit ?? throw new ArgumentNullException(nameof(spirit));
     }
 
     /// <summary>
@@ -34,7 +32,7 @@ public class Review
     /// Gets the spirit information.
     /// </summary>
     [JsonProperty("spirit")]
-    public SpiritInfo Spirit { get; }
+    public SpiritInfo Spirit { get; private set; }
 
     /// <summary>
     /// Gets the rating, out of 5.
@@ -52,14 +50,20 @@ public class Review
     /// Gets the author identifier.
     /// </summary>
     [JsonProperty("authorId")]
-    public string AuthorId { get; }
+    public string AuthorId { get; private set; }
 
     /// <summary>
     /// Gets the author's name.
     /// </summary>
     /// <value></value>
     [JsonProperty("authorName")]
-    public string AuthorName { get; }
+    public string AuthorName { get; private set; }
+
+    /// <summary>
+    /// Gets the date the review was created.
+    /// </summary>
+    [JsonProperty("created")]
+    public DateTime Created { get; private set; }
 
     /// <summary>
     /// Rates the spirit in the review.
@@ -69,12 +73,6 @@ public class Review
     {
         this.Rating = rating;
     }
-
-    /// <summary>
-    /// Gets the date the review was created.
-    /// </summary>
-    [JsonProperty("created")]
-    public DateTime Created { get; }
 
     /// <summary>
     /// Sets the notes for the spirit in the view.

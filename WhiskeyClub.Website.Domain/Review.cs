@@ -12,8 +12,7 @@ public class Review
     /// Initializes a new instance of the <see cref="Review" /> class.
     /// </summary>
     /// <param name="id">The review identifier.</param>
-    /// <param name="spirit">The spirit information.</param>
-    public Review(string id, SpiritInfo spirit, string authorId, string authorName)
+    public Review(string id)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
@@ -21,9 +20,6 @@ public class Review
         }
 
         this.Id = id;
-        this.Spirit = spirit ?? throw new ArgumentNullException(nameof(spirit));
-        this.AuthorId = authorId;
-        this.AuthorName = authorName;
     }
 
     /// <summary>
@@ -36,38 +32,38 @@ public class Review
     /// Gets the spirit information.
     /// </summary>
     [JsonProperty("spirit")]
-    public SpiritInfo Spirit { get; }
+    public SpiritInfo Spirit { get; private set; }
 
     /// <summary>
     /// Gets the rating, out of 5.
     /// </summary>
     [JsonProperty("rating")]
-    public int Rating { get; } 
+    public int Rating { get; private set; } 
 
     /// <summary>
     /// Gets the notes for the review.
     /// </summary>
     [JsonProperty("notes")]
-    public string Notes { get; } = string.Empty;
+    public string Notes { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets the author identifier.
     /// </summary>
     [JsonProperty("authorId")]
-    public string AuthorId { get; }
+    public string AuthorId { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets the author's name.
     /// </summary>
     /// <value></value>
     [JsonProperty("authorName")]
-    public string AuthorName { get; }
+    public string AuthorName { get; private set; } = string.Empty;
 
     /// <summary>
     /// Gets the date the review was created.
     /// </summary>
     [JsonProperty("created")]
-    public DateTime Created { get; }
+    public DateTime Created { get; private set; }
 
     /// <summary>
     /// Gets the review identifier
