@@ -75,7 +75,7 @@ namespace WhiskeyClub.Website.Functions
                 databaseName: "WhiskeyClub",
                 collectionName: "Spirits",
                 ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING",
-                PartitionKey = "{id}")] Spirit spirit,
+                Id = "{id}")] Spirit spirit,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
