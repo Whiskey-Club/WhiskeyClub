@@ -1,19 +1,18 @@
 @page "/reviews"
 @using Reviews
+@inject NavigationManager NavigationManager
 
 <PageTitle>Whiskey Reviews</PageTitle>
-
-<AddReviewModalComponent @ref="this.addReview" />
 
 <div class="container">
     <div class="d-flex flex-row-reverse">
         <div class="p-2">
-            <button type="button" class="btn btn-primary" @onclick="() => this.addReview.Open()">
+            <button type="button" class="btn btn-primary" @onclick="AddReviewClicked">
                 <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Review
             </button>
         </div>
     </div>
-    <div class="d-flex flex-row">
+    <div class="row">
         @if (this.isLoading)
         {
             <h2>Loading reviews...</h2>
@@ -54,12 +53,6 @@
     bool isLoading;
     private int currentCount = 0;
     private IEnumerable<Review> reviews = null;
-    private AddReviewModalComponent addReview;
-
-    private void AddReviewClicked()
-    {
-        currentCount++;
-    }
 
     /// <inheritdoc />
     protected override async Task OnInitializedAsync()
@@ -75,5 +68,10 @@
         {
             this.isLoading = false;
         }
+    }
+
+    private void AddReviewClicked()
+    {
+        this.NavigationManager.NavigateTo("add/review");
     }
 }

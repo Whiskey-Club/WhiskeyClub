@@ -1,0 +1,93 @@
+@page "/add/review"
+
+@using Models.Spirits
+@using Reviews
+
+@inject NavigationManager navigationManager
+
+<div class="container">
+    <div class="row">
+        <h2>Add a new spirit review</h2>
+    </div>
+
+    @if (failed)
+    {
+        <div class="row" >
+            <div class="col-8">
+                <div class="alert alert-danger" role="alert">
+                    Review could not be added!
+                </div>
+            </div>
+        </div>
+    }
+
+    <EditForm Model="@review" OnValidSubmit="@HandleValidSubmitAsync">
+        <div class="form-group">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row">
+                <div class="col-4">
+                    <InputText class="form-control form-control-lg" id="authorName" @bind-Value="review.AuthorName" placeholder="Author Name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <InputText class="form-control form-control-lg" id="spiritName" @bind-Value="review.SpiritName" placeholder="Spirit Name (ie. Wild Turkey Rare Breed, Ardbeg 10)" />
+                </div>
+                <div class="col-4">
+                    <InputText class="form-control form-control-lg" id="spiritBrand" @bind-Value="review.SpiritBrand" placeholder="Spirit Brand Name (ie. Wild Turkey, Ardbeg)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <InputTextArea class="form-control form-control-lg" id="notes" @bind-Value="review.Notes" placeholder="Notes" rows="4" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5"></div>
+                <div class="col-3">
+                    <button class="form-control form-control-lg btn btn-primary" type="submit">Add</button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+
+    private bool failed = false;
+    private ReviewComponentModel review = new ReviewComponentModel(Guid.NewGuid().ToString());
+
+    private async Task HandleValidSubmitAsync()
+    {
+        this.failed = false;
+
+        // TODO: Need to get the current user
+        var author = new Author(Guid.NewGuid().ToString())
+        {
+            Name = this.review.AuthorName,
+        };
+        
+        // TODO: Need to get the list of spirits and have the user select one.
+        var spirit = new Spirit(Guid.NewGuid().ToString())
+        {
+            Name = this.review.SpiritName,
+            Brand = this.review.SpiritBrand,
+        };
+
+        var review = author.CreateReview(spirit, this.review.Rating, this.review.Notes);
+        
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+        var repository = new ReviewRepository();
+        var result = await repository.AddReviewAsync(review, cts.Token);
+        if (result)
+        {
+            this.navigationManager.NavigateTo("reviews");
+        }
+        else
+        {
+            this.failed = true;
+        }
+    }
+}

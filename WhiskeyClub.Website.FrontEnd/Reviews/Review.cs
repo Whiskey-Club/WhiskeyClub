@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -32,38 +33,38 @@ public class Review
     /// Gets the spirit information.
     /// </summary>
     [JsonProperty("spirit")]
-    public SpiritInfo Spirit { get; private set; }
+    public SpiritInfo Spirit { get; set; }
 
     /// <summary>
     /// Gets the rating, out of 5.
     /// </summary>
     [JsonProperty("rating")]
-    public int Rating { get; private set; } 
+    public int Rating { get; set; } 
 
     /// <summary>
     /// Gets the notes for the review.
     /// </summary>
     [JsonProperty("notes")]
-    public string Notes { get; private set; } = string.Empty;
+    public string Notes { get; set; } = string.Empty;
     
     /// <summary>
     /// Gets the author identifier.
     /// </summary>
     [JsonProperty("authorId")]
-    public string AuthorId { get; private set; }
+    public string AuthorId { get; set; }
 
     /// <summary>
     /// Gets the author's name.
     /// </summary>
     /// <value></value>
     [JsonProperty("authorName")]
-    public string AuthorName { get; private set; }
+    public string AuthorName { get; set; }
 
     /// <summary>
     /// Gets the date the review was created.
     /// </summary>
     [JsonProperty("created")]
-    public DateTime Created { get; private set; }
+    public DateTime Created { get; set; }
 
     /// <summary>
     /// Rates the spirit in the review.
