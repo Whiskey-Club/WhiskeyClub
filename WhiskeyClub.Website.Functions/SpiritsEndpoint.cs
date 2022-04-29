@@ -16,7 +16,7 @@ namespace WhiskeyClub.Website.Functions
     public static class SpiritsEndpoint
     {
         [FunctionName("CreateSpirit")]
-        public static async Task<IActionResult> CreatSpiritAsync(
+        public static async Task<IActionResult> CreateSpiritAsync(
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 "post",
@@ -37,16 +37,17 @@ namespace WhiskeyClub.Website.Functions
             //     ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
             //     : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
-            return new OkObjectResult("we good");
+            return new CreatedResult($"spirits/{spirit.Id}", spirit);
         }
 
         [FunctionName("GetSpirits")]
-        public static IActionResult Run(
+        public static IActionResult GetSpirits(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get",
                 Route = "spirits")]HttpRequest request,
             [CosmosDB(
                 databaseName: "WhiskeyClub",
                 collectionName: "Spirits",
+                SqlQuery = "select * from c",
                 ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING")] IEnumerable<Spirit> spirits,
             ILogger log)
         {
@@ -65,7 +66,7 @@ namespace WhiskeyClub.Website.Functions
         }
 
         [FunctionName("GetSpirit")]
-        public static IActionResult Run(
+        public static IActionResult GetSpirit(
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 "get",
@@ -74,7 +75,7 @@ namespace WhiskeyClub.Website.Functions
                 databaseName: "WhiskeyClub",
                 collectionName: "Spirits",
                 ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING",
-                Id = "{id}")] Spirit spirit,
+                PartitionKey = "{id}")] Spirit spirit,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
