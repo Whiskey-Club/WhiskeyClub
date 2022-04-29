@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace WhiskeyClub.Website.FrontEnd.Models.Spirits;
 
 public class Spirit
@@ -8,10 +11,39 @@ public class Spirit
     }
 
     /// <summary>
-    /// Gets the spirit identifier.
+    /// Gets or sets the spirit identifier.
     /// </summary>
-    public string Id { get; }
+    [JsonProperty("id")]
+    public string Id { get; set; }
 
-    public string Name {get;set;}
-    public string Brand {get;set;}
+    /// <summary>
+    /// Gets or sets the spirit name.
+    /// </summary>
+    [JsonProperty("name")]
+    public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the brand of the spirit.
+    /// </summary>
+    [JsonProperty("brand")]
+    public string Brand { get; set; }
+
+    /// <summary>
+    /// Gets or sets the category.
+    /// </summary>
+    [JsonProperty("category")]
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SpiritCategory Category { get; set; } 
+
+    /// <summary>
+    /// Gets or sets the description.
+    /// </summary>
+    [JsonProperty("description")]
+    public string Description { get; set; }
+
+    /// <summary>
+    /// Gets or sets the featured month.
+    /// </summary>
+    [JsonProperty("featuredMonth")]
+    public DateTime? FeaturedMonth { get; set; }
 }

@@ -1,5 +1,5 @@
-@using WhiskeyClub.Website.Domain
 @page "/monthlyChoices"
+@using Models.Spirits
 @inject HttpClient httpClient
 
 <PageTitle>Monthly Choices</PageTitle>
@@ -40,7 +40,7 @@
 
     private Spirit CreateSpirit(string name)
     {
-        Spirit s = new Spirit();
+        Spirit s = new Spirit(Guid.NewGuid().ToString());
         s.Name = name;
         return s;
     }
