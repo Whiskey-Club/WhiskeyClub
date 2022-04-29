@@ -9,7 +9,7 @@ public class Spirit
     /// Gets or sets the spirit identifier.
     /// </summary>
     [JsonProperty("id")]
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// Gets or sets the spirit name.
