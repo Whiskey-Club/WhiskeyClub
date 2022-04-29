@@ -37,11 +37,11 @@ namespace WhiskeyClub.Website.Functions
             //     ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
             //     : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
-            return new CreatedResult($"spirits/{spirit.Id}", spirit);
+            return new OkResult();
         }
 
-        [FunctionName("GetSpirits")]
-        public static IActionResult GetSpirits(
+        [FunctionName("GetAllSpirits")]
+        public static IActionResult GetAllSpirits(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get",
                 Route = "spirits")]HttpRequest request,
             [CosmosDB(
@@ -65,8 +65,8 @@ namespace WhiskeyClub.Website.Functions
             }
         }
 
-        [FunctionName("GetSpirit")]
-        public static IActionResult GetSpirit(
+        [FunctionName("GetSpiritById")]
+        public static IActionResult GetSpiritById(
             [HttpTrigger(
                 AuthorizationLevel.Anonymous,
                 "get",
