@@ -1,0 +1,69 @@
+@page "/reviews"
+@using Reviews
+
+<PageTitle>Whiskey Reviews</PageTitle>
+
+<div class="container">
+    <div class="row">
+        @if (this.isLoading)
+        {
+            <h2>Loading reviews...</h2>
+        }
+        else if (this.reviews == null || !this.reviews.Any())
+        {
+            <h2>No reviews could be found!</h2>
+        }
+        else
+        {        
+            foreach (var review in this.reviews)
+            {
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@review.Spirit.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">By @review.AuthorName on @review.Created</h6>
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            if (i < review.Rating)
+                            {
+                                <i class="fa-solid fa-star"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-regular fa-star"></i>
+                            }
+                        }
+                        <p class="card-text">@review.Notes</p>
+                        <a href="reviews/@review.Id" class="card-link">Read more</a>
+                    </div>
+                </div>
+            }
+        }        
+    </div>
+</div>
+
+@code {
+    bool isLoading;
+    private int currentCount = 0;
+    private IEnumerable<Review> reviews = null;
+
+    private void NewReviewClicked()
+    {
+        currentCount++;
+    }
+
+    /// <inheritdoc />
+    protected override async Task OnInitializedAsync()
+    {
+        this.isLoading = true;
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            var repository = new ReviewRepository();
+            this.reviews = await repository.GetAllReviewsAsync(cts.Token);
+        }
+        finally
+        {
+            this.isLoading = false;
+        }
+    }
+}

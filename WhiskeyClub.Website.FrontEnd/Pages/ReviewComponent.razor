@@ -1,0 +1,71 @@
+@page "/reviews/{reviewId}"
+@using Reviews
+
+<PageTitle>Whiskey Review</PageTitle>
+
+<div class="container">
+    <div class="row">
+        @if (this.isLoading)
+        {
+            <h2>Loading...</h2>
+        }
+        else if (this.review == null)
+        {
+            <h2>The review could not be found!</h2>
+        }
+        else
+        {        
+            <h1>Review of @this.review.Spirit.Name from @this.review.Spirit.Brand</h1>
+            <p>
+                @this.review.Created by @this.review.AuthorName
+                @for (int i = 0; i < 5; i++)
+                {
+                    if (i < this.review.Rating)
+                    {
+                        <i class="fa-solid fa-star"></i>
+                    }
+                    else
+                    {
+                        <i class="fa-regular fa-star"></i>
+                    }
+                }
+            </p>
+            <h2>Notes</h2>
+            <p>@this.review.Notes</p>
+        }        
+    </div>
+</div>
+
+@code {
+
+    private bool isLoading;
+    private Review? review = null;
+
+    /// <summary>
+    /// Gets or sets the review identifier passed in by the route.
+    /// </summary>
+    [Parameter]
+    public string? ReviewId { get; set; }
+
+    /// <inheritdoc />
+    protected override async Task OnInitializedAsync()
+    {
+        if (this.ReviewId == null)
+        {
+            return;
+        }
+
+        this.isLoading = true;
+        try
+        {
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+            var repository = new ReviewRepository();
+            this.review = await repository.GetReviewAsync(this.ReviewId, cts.Token);
+        }
+        finally
+        {
+            this.isLoading = false;
+        }
+    }
+}
+

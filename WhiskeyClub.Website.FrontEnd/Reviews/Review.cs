@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace WhiskeyClub.Website.Domain;
+namespace WhiskeyClub.Website.FrontEnd.Reviews;
 
 /// <summary>
 /// Defines a review aggregate.
@@ -13,7 +13,7 @@ public class Review
     /// </summary>
     /// <param name="id">The review identifier.</param>
     /// <param name="spirit">The spirit information.</param>
-    public Review(string id, SpiritInfo spirit, string authorId, string authorName)
+    public Review(string id, SpiritInfo spirit)
     {
         if (string.IsNullOrWhiteSpace(id))
         {
@@ -22,8 +22,6 @@ public class Review
 
         this.Id = id;
         this.Spirit = spirit ?? throw new ArgumentNullException(nameof(spirit));
-        this.AuthorId = authorId;
-        this.AuthorName = authorName;
     }
 
     /// <summary>
@@ -42,14 +40,14 @@ public class Review
     /// Gets the rating, out of 5.
     /// </summary>
     [JsonProperty("rating")]
-    public int Rating { get; } 
+    public int Rating { get; private set; } 
 
     /// <summary>
     /// Gets the notes for the review.
     /// </summary>
     [JsonProperty("notes")]
-    public string Notes { get; } = string.Empty;
-
+    public string Notes { get; private set; } = string.Empty;
+    
     /// <summary>
     /// Gets the author identifier.
     /// </summary>
@@ -64,37 +62,26 @@ public class Review
     public string AuthorName { get; }
 
     /// <summary>
+    /// Rates the spirit in the review.
+    /// </summary>
+    /// <param name="rating">The rating, out of 5.</param>
+    public void Rate(int rating)
+    {
+        this.Rating = rating;
+    }
+
+    /// <summary>
     /// Gets the date the review was created.
     /// </summary>
     [JsonProperty("created")]
     public DateTime Created { get; }
 
     /// <summary>
-    /// Gets the review identifier
+    /// Sets the notes for the spirit in the view.
     /// </summary>
-    /// <remarks>Used as the partition key for the Reviews CosmosDB container.</remarks>
-    [JsonProperty("reviewId")]
-    private string reviewId => this.Id;
-
-    /// <summary>
-    /// Gets the spirit identifier.
-    /// </summary>
-    /// <remarks>Used as the partition key for the Spirits CosmosDB container.</remarks>
-    [JsonProperty("spiritId")]
-    private string spiritId => this.Spirit?.Id ?? string.Empty;
-
-    /// <summary>
-    /// Gets the user identifier of the author.
-    /// </summary>
-    /// <remarks>Used as the partition key for the Users CosmosDB container.</remarks>
-    [JsonProperty("userId")]
-    private string userId => this.AuthorId;
-
-    /// <summary>
-    /// Gets the document type.
-    /// </summary>
-    /// <remarks>Used to identify the type of document in the CosmosDB container.</remarks>
-    [JsonConverter(typeof(StringEnumConverter))]
-    [JsonProperty("type")]
-    private DocumentType DocumentType => DocumentType.Review;
+    /// <param name="notes">The notes.</param>
+    public void Note(string notes)
+    {
+        this.Notes = notes;
+    }
 }
