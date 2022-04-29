@@ -1,5 +1,6 @@
 @using WhiskeyClub.Website.Domain
 @page "/monthlyChoices"
+@inject HttpClient httpClient
 
 <PageTitle>Monthly Choices</PageTitle>
 
@@ -19,6 +20,9 @@
             Search by spirit name: <input type="text" id="spiritName"/>
         </div>
     </div>
+    <div class="row">
+        @jsonData
+    </div>
     @* So we want to tie this up to a function that gets the number of monthly selections and passes in specific
     selection data to the MonthlyChoice component which will render in the for loop...*@
     @for (int i = 0; i < 5; i++)
@@ -31,6 +35,8 @@
 
 
 @code {
+
+    private string jsonData;
 
     private Spirit CreateSpirit(string name)
     {
@@ -47,5 +53,12 @@
     private void CreateNewMonthlySelection()
     {
         throw new NotImplementedException();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // to matthew: you don't have to keep any of this stuff around, just giving you an example of making a GET http request. Enjoy!
+        var response = await httpClient.GetAsync("https://whiskey-club.azurewebsites.net/api/spirits");
+        this.jsonData = await response.Content.ReadAsStringAsync();
     }
 }
