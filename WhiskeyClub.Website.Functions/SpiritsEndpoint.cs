@@ -13,6 +13,7 @@ using System.Linq;
 
 namespace WhiskeyClub.Website.Functions
 {
+
     public static class SpiritsEndpoint
     {
         [FunctionName("CreateSpirit")]
@@ -24,19 +25,14 @@ namespace WhiskeyClub.Website.Functions
             [CosmosDB(
                 databaseName: "WhiskeyClub",
                 collectionName: "Spirits",
-                ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING")] IAsyncCollector<Spirit> spiritsOut,
+                ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING")] IAsyncCollector<Spirit> spirits,
             ILogger log)
         {
-            log.LogInformation("Post to /spirits");
+            log.LogInformation("Received a create spirit request", request);
 
             string requestBody = await new StreamReader(request.Body).ReadToEndAsync();
             Spirit spirit = JsonConvert.DeserializeObject<Spirit>(requestBody);
-
-            await spiritsOut.AddAsync(spirit);
-            // string responseMessage = string.IsNullOrEmpty(name)
-            //     ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-            //     : $"Hello, {name}. This HTTP triggered function executed successfully.";
-
+            await spirits.AddAsync(spirit);
             return new OkResult();
         }
 
