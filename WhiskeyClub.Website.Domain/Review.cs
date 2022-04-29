@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace WhiskeyClub.Website.Domain;
 
@@ -46,6 +47,28 @@ public class Review
     /// </summary>
     [JsonProperty("notes")]
     public string Notes { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// Gets the review identifier
+    /// </summary>
+    /// <remarks>Used as the partition key for the Reviews CosmosDB container.</remarks>
+    [JsonProperty("reviewId")]
+    private string reviewId => this.Id;
+
+    /// <summary>
+    /// Gets the spirit identifier.
+    /// </summary>
+    /// <remarks>Used as the partition key for the Spirits CosmosDB container.</remarks>
+    [JsonProperty("spiritId")]
+    private string spiritId => this.Spirit?.Id ?? string.Empty;
+
+    /// <summary>
+    /// Gets the document type.
+    /// </summary>
+    /// <remarks>Used to identify the type of document in the CosmosDB container.</remarks>
+    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonProperty("type")]
+    private DocumentType DocumentType => DocumentType.Review;
 
     /// <summary>
     /// Rates the spirit in the review.

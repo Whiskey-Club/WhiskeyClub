@@ -10,46 +10,46 @@ public class SpiritInfo
     /// <summary>
     /// Initializes a new instance of the <see cref="SpiritInfo" /> class.
     /// </summary>
-    /// <param name="spiritId">The spirit identifier.</param>
-    /// <param name="spiritName">The spirit name.</param>
-    /// <param name="spiritBrand">The spirit brand.</param>
-    public SpiritInfo(string spiritId, string spiritName, string spiritBrand)
+    /// <param name="id">The spirit identifier.</param>
+    /// <param name="name">The spirit name.</param>
+    /// <param name="brand">The spirit brand.</param>
+    public SpiritInfo(string id, string name, string brand)
     {
-        if (string.IsNullOrWhiteSpace(spiritId))
+        if (string.IsNullOrWhiteSpace(id))
         {
-            throw new ArgumentException($"'{nameof(spiritId)}' cannot be null or whitespace.", nameof(spiritId));
+            throw new ArgumentException($"'{nameof(id)}' cannot be null or whitespace.", nameof(id));
         }
 
-        if (string.IsNullOrWhiteSpace(spiritName))
+        if (string.IsNullOrWhiteSpace(name))
         {
-            throw new ArgumentException($"'{nameof(spiritName)}' cannot be null or whitespace.", nameof(spiritName));
+            throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
         }
 
-        if (string.IsNullOrWhiteSpace(spiritBrand))
+        if (string.IsNullOrWhiteSpace(brand))
         {
-            throw new ArgumentException($"'{nameof(spiritBrand)}' cannot be null or whitespace.", nameof(spiritBrand));
+            throw new ArgumentException($"'{nameof(brand)}' cannot be null or whitespace.", nameof(brand));
         }
 
-        this.SpiritId = spiritId;
-        this.SpiritName = spiritName;
-        this.SpiritBrand = spiritBrand;
+        this.Id = id;
+        this.Name = name;
+        this.Brand = brand;
     }
 
     /// <summary>
     /// Gets the spirit identifier.
     /// </summary>
-    [JsonProperty("spiritId")]
-    public string SpiritId { get; }
+    [JsonProperty("id")]
+    public string Id { get; }
 
     /// <summary>
     /// Gets the spirit name.
     /// </summary>
-    [JsonProperty("spiritName")]
-    public string SpiritName { get; }
+    [JsonProperty("name")]
+    public string Name { get; }
 
     /// <summary>
     /// Gets the spirit brand.
     /// </summary>
-    [JsonProperty("spiritBrand")]
-    public string SpiritBrand { get; }
+    [JsonProperty("brand")]
+    public string Brand { get; }
 }

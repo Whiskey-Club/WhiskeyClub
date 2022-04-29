@@ -2,6 +2,7 @@ namespace WhiskeyClub.Website.Domain;
 
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 public class Spirit
 {    
@@ -27,6 +28,7 @@ public class Spirit
     /// Gets or sets the category.
     /// </summary>
     [JsonProperty("category")]
+    [JsonConverter(typeof(StringEnumConverter))]
     public SpiritCategory Category { get; set; } 
 
     /// <summary>

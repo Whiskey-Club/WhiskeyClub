@@ -20,7 +20,7 @@ namespace WhiskeyClub.Website.Functions
         [FunctionName("GetAllReviews")]
         public static IActionResult GetAllReviews(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get",
-                Route = "spirits")]HttpRequest request,
+                Route = "reviews")]HttpRequest request,
             [CosmosDB(
                 databaseName: "WhiskeyClub",
                 collectionName: "Reviews",
@@ -60,6 +60,34 @@ namespace WhiskeyClub.Website.Functions
             Review review = JsonConvert.DeserializeObject<Review>(requestBody);
             await reviews.AddAsync(review);
             return new OkResult();
+        }
+
+        [FunctionName("GetReviewById")]
+        public static IActionResult GetReviewById(
+            [HttpTrigger(
+                AuthorizationLevel.Anonymous,
+                "get",
+                Route = "reviews/{id}")] HttpRequest request,
+            [CosmosDB(
+                databaseName: "WhiskeyClub",
+                collectionName: "Reviews",
+                ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING",
+                PartitionKey = "{id}",
+                Id = "{id}")] Review review,
+            ILogger log)
+        {
+            log.LogInformation("Received a get review by id request", request);
+
+            if (review == null)
+            {
+                log.LogInformation($"Review not found");
+                return new NotFoundResult();
+            }
+            else
+            {
+                log.LogInformation($"Review found");
+                return new OkObjectResult(JsonConvert.SerializeObject(review));
+            }
         }
     }
 }

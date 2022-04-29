@@ -1,0 +1,11 @@
+{
+  "body": {
+    "content": "ewogICAgImlkIjoiMSIsCiAgICAic3Bpcml0IjogewogICAgICAgICJpZCI6IjEiLAogICAgICAgICJuYW1lIjoidGVzdCBzcGlyaXQiLAogICAgICAgICJicmFuZCI6ICJ0ZXN0IGJyYW5kIgogICAgfSwKICAgICJyYXRpbmciOjIsCiAgICAibm90ZXMiOiJOb25lIG5vdGVkIgp9",
+    "file": false,
+    "fileSize": false
+  },
+  "headers": {},
+  "method": "POST",
+  "title": "Create Review",
+  "url": "http://localhost:7071/api/reviews"
+}
