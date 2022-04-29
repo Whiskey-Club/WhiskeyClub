@@ -8,14 +8,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using WhiskeyClub.Website.Domain;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WhiskeyClub.Website.Functions
 {
     public static class SpiritsEndpoint
     {
-        [FunctionName("createSpirits")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
+        [FunctionName("CreateSpirit")]
+        public static async Task<IActionResult> CreatSpiritAsync(
+            [HttpTrigger(
+                AuthorizationLevel.Anonymous,
+                "post",
+                Route = "spirits")] HttpRequest request,
             [CosmosDB(
                 databaseName: "WhiskeyClub",
                 collectionName: "Spirits",
@@ -35,10 +40,36 @@ namespace WhiskeyClub.Website.Functions
             return new OkObjectResult("we good");
         }
 
-        [FunctionName("getSpirits")]
+        [FunctionName("GetSpirits")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post",
-                Route = "spirits/{id}")]HttpRequest request,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get",
+                Route = "spirits")]HttpRequest request,
+            [CosmosDB(
+                databaseName: "WhiskeyClub",
+                collectionName: "Spirits",
+                ConnectionStringSetting = "COSMOS_DB_CONNECTION_STRING")] IEnumerable<Spirit> spirits,
+            ILogger log)
+        {
+            log.LogInformation("C# HTTP trigger function processed a request.");
+
+            if (!spirits.Any())
+            {
+                log.LogInformation($"No spirits found");
+                return new NotFoundResult();
+            }
+            else
+            {
+                log.LogInformation($"Multiple spirits found: {spirits.Count()}");
+                return new OkObjectResult(JsonConvert.SerializeObject(spirits));
+            }
+        }
+
+        [FunctionName("GetSpirit")]
+        public static IActionResult Run(
+            [HttpTrigger(
+                AuthorizationLevel.Anonymous,
+                "get",
+                Route = "spirits/{id}")] HttpRequest request,
             [CosmosDB(
                 databaseName: "WhiskeyClub",
                 collectionName: "Spirits",
