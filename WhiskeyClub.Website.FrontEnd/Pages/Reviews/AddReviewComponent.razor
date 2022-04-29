@@ -6,6 +6,7 @@
 
 @inject NavigationManager navigationManager
 @inject IReviewRepository reviewRepository
+@inject ISpiritRepository spiritRepository
 
 <div class="container">
     <div class="row">
@@ -35,13 +36,23 @@
             </div>
             <div class="row">
                 <div class="col-4">
-                    @* <select class="form-control selectpicker" @bind="review.SpiritId">
-                        @foreach (var item in this)
-                    </select> *@
-                    <InputText class="form-control form-control-lg" id="spiritName" @bind-Value="review.SpiritName" placeholder="Spirit Name (ie. Wild Turkey Rare Breed, Ardbeg 10)" />
+                    <select class="form-control form-control-lg selectpicker" @bind="@selectedSpiritId">
+                        <option value="" disabled selected>Select a spirit...</option>
+                        @if (this.spirits == null)
+                        {
+                            <option>Loading...</option>
+                        }
+                        else
+                        {
+                            foreach (var spirit in this.spirits)
+                            {
+                                <option value="@spirit.Id">@spirit.Name by @spirit.Brand</option>
+                            }
+                        }                        
+                    </select>
                 </div>
                 <div class="col-4">
-                    <InputText class="form-control form-control-lg" id="spiritBrand" @bind-Value="review.SpiritBrand" placeholder="Spirit Brand Name (ie. Wild Turkey, Ardbeg)" />
+                    <InputNumber class="form-control form-control-lg" id="rating" @bind-Value="review.Rating" placeholder="Rating" />
                 </div>
             </div>
             <div class="row">
@@ -62,7 +73,16 @@
 @code {
 
     private bool failed = false;
+    private IEnumerable<Spirit> spirits;
+    private string selectedSpiritId;
     private ReviewComponentModel review = new ReviewComponentModel(Guid.NewGuid().ToString());
+
+    /// <inheritdoc />
+    protected override async Task OnInitializedAsync()
+    {
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+        this.spirits = await this.spiritRepository.GetAllSpiritsAsync(cts.Token);
+    }
 
     private async Task HandleValidSubmitAsync()
     {
@@ -74,13 +94,7 @@
             Name = this.review.AuthorName,
         };
         
-        // TODO: Need to get the list of spirits and have the user select one.
-        var spirit = new Spirit(Guid.NewGuid().ToString())
-        {
-            Name = this.review.SpiritName,
-            Brand = this.review.SpiritBrand,
-        };
-
+        var spirit = this.spirits.First(s => s.Id == this.selectedSpiritId);
         var review = author.CreateReview(spirit, this.review.Rating, this.review.Notes);
         
         using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
