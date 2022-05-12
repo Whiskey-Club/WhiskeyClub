@@ -6,13 +6,17 @@
 <PageTitle>Whiskey Reviews</PageTitle>
 
 <div class="container">
-    <div class="d-flex flex-row-reverse">
-        <div class="p-2">
-            <button type="button" class="btn btn-primary" @onclick="AddReviewClicked">
-                <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Review
-            </button>
-        </div>
-    </div>
+    <AuthorizeView>
+        <Authorized>
+            <div class="d-flex flex-row-reverse">
+                <div class="p-2">
+                    <button type="button" class="btn btn-primary" @onclick="AddReviewClicked">
+                        <i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Review
+                    </button>
+                </div>
+            </div>
+        </Authorized>
+    </AuthorizeView>
     <div class="row">
         @if (this.isLoading)
         {
